@@ -27,4 +27,4 @@ jobs:
     - name: Docker push
       run: |
         docker tag simple_time_service ghcr.io/ritika54/simple_time_service:latest
-        docker push -t ghcr.io/ritika54/simple_time_service:latest
+        docker push ghcr.io/ritika54/simple_time_service:latest
