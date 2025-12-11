@@ -17,6 +17,8 @@ jobs:
     env:
         TF_WORKSPACE: "SimpleTimeService"
         CONFIG_DIRECTORY : "./gitops/terraform/"
+        TF_CLOUD_ORGANIZATION: "AzRitika"
+        TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
     steps:
         - uses: actions/checkout@v4
 
