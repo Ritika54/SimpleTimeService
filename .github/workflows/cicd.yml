@@ -58,13 +58,5 @@ jobs:
           run: |
             cd gitops/chart
             DOCKER_CFG_JSON=$(echo -n '{"auths":{"ghcr.io/ritika54":{"username":"Ritika54","password":"${{ secrets.DOCKER_PASSWORD }}"}}}' | base64 -w 0)
-            sed "s|YOUR_SECRET_PLACEHOLDER|$DOCKER_CFG_JSON|" secret.yaml > secret.yaml
-            ls
-            cat secret.yaml
+            sed "s|SECRET_PLACEHOLDER|$DOCKER_CFG_JSON|" secret.yaml > secret-tmp.yaml
             kubectl apply -f . -n simple-time-service
-        
-        - name: check
-          run: |
-            cd gitops/chart
-            ls
-            cat secret.yaml
