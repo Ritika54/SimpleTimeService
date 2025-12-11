@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: simple-time-service
+spec:
+  selector:
+    app: simple-time-service
+  ports:
+  - port: 8080
+    targetPort: 8080
