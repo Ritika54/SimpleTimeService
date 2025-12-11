@@ -54,6 +54,6 @@ jobs:
             az account set --subscription 492ab093-d627-4955-b6ba-0306b9a8b13e
             az aks get-credentials --resource-group rg-ritika-test --name aks-ritika-test --overwrite-existing
 
-        - name: Apply yamls
+        - name: Apply yamls on cluster
           run: |
-            kubectl apply -f gitops/chart/*.yaml -n simple-time-service
+            kubectl apply -f gitops/chart/ -n simple-time-service
