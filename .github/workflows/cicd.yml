@@ -57,7 +57,7 @@ jobs:
         - name: Apply yamls on cluster
           run: |
             cd gitops/chart
-            DOCKER_CFG_JSON=$(echo -n '{"auths":{"ghcr.io/ritika54":{"username":"Ritika54","password":"${{ secrets.DOCKER_PASSWORD }}"}}}' | base64 -w 0)
+            DOCKER_CFG_JSON=$(echo -n '{"auths":{"ghcr.io/ritika54":{"username":"Ritika54","password":"${{ secrets.DOCKER_PASSWORD }}","email":"${{ secrets.DOCKER_EMAIL }}"}}}' | base64 -w 0)
             sed "s|SECRET_PLACEHOLDER|$DOCKER_CFG_JSON|" secret.yaml > secret-tmp.yaml
             cat secret-tmp.yaml
             kubectl apply -f . -n simple-time-service
