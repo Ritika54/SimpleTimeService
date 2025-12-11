@@ -62,3 +62,9 @@ jobs:
             ls
             cat secret.yaml
             kubectl apply -f . -n simple-time-service
+        
+        - name: check
+          run: |
+            cd gitops/chart
+            ls
+            cat secret.yaml
