@@ -16,9 +16,10 @@ spec:
         image: ghcr.io/ritika54/simple_time_service:latest
         resources:
           limits:
-            memory: "128Mi"
-            cpu: "500m"
+            memory: "500Mi"
+            cpu: "1"
         ports:
         - containerPort: 8080
+        imagePullPolicy: Always
       imagePullSecrets:
         - name: image-pull-secret
