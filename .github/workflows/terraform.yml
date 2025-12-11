@@ -41,6 +41,7 @@ jobs:
             workspace: ${{ env.TF_WORKSPACE }}
             directory: ${{ env.CONFIG_DIRECTORY }}
             speculative: true
+          env:
             ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
             ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
             ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
@@ -53,6 +54,7 @@ jobs:
             workspace: ${{ env.TF_WORKSPACE }}
             configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
             plan_only: true
+          env:
             ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
             ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
             ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
