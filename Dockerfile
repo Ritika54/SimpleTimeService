@@ -4,6 +4,6 @@ RUN adduser -S app
 USER app
 
 COPY ./simple_time_service/* ./app/
-EXPOSE 8080
+EXPOSE 8081
 
 ENTRYPOINT [ "go", "run", "./app/main.go" ]
