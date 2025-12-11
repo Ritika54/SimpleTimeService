@@ -11,15 +11,15 @@ variable "resource_group_name" {
 }
 
 variable "azurerm_kubernetes_cluster_name" {
-    type = string
-    default = "aks-ritika-test"
-    description = "name of aks cluster" 
+  type        = string
+  default     = "aks-ritika-test"
+  description = "name of aks cluster"
 }
 
 variable "azurerm_kubernetes_cluster_dns_prefix" {
-    type = string
-    default = "dns-ritika-test"
-    description = "DNS prefix of cluster"
+  type        = string
+  default     = "dns-ritika-test"
+  description = "DNS prefix of cluster"
 }
 
 variable "node_count" {
@@ -41,6 +41,6 @@ variable "username" {
 }
 
 variable "ssh_key_name" {
-    type = string
-    default = "ssh-key-ritika-test"
+  type    = string
+  default = "ssh-key-ritika-test"
 }
