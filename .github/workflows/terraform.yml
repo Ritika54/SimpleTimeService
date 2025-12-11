@@ -11,6 +11,11 @@ env:
     CONFIG_DIRECTORY : "./gitops/terraform"
     TF_CLOUD_ORGANIZATION: "AzRitika"
     TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
+    ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+    ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+    ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+    ARM_SKIP_PROVIDER_AUTHENTICATION: true 
 
 jobs:
   terraform:
@@ -41,11 +46,6 @@ jobs:
             workspace: ${{ env.TF_WORKSPACE }}
             directory: ${{ env.CONFIG_DIRECTORY }}
             speculative: true
-          env:
-            ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-            ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-            ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-            ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         
         - name: Create Plan Run
           uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
@@ -54,11 +54,6 @@ jobs:
             workspace: ${{ env.TF_WORKSPACE }}
             configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
             plan_only: true
-          env:
-            ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-            ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-            ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-            ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         
         - name: Get Plan Output
           uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.0
