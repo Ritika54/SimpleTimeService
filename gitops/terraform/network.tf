@@ -65,7 +65,8 @@ resource "azurerm_route_table" "aks_node_rt" {
   route {
     name                   = "DefaultRouteToInternet"
     address_prefix         = "0.0.0.0/0"
-    next_hop_type          = "Internet"
+    next_hop_in_ip_address = azurerm_public_ip.nat_gw_pip.ip_address
+    next_hop_type          = "VirtualAppliance" 
   }
 }
 
