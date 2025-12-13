@@ -62,8 +62,13 @@ resource "azurerm_route_table" "aks_node_rt" {
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
-  # Note: You do not need to manually add the 0.0.0.0/0 route here. 
-  # Associating the NAT Gateway in the subnet configuration handles the outbound rule implicitly.
+  route {
+    name                   = "DefaultRouteToInternet"
+    address_prefix         = "0.0.0.0/0"
+    # The next_hop_type for a UDR going via an Azure-managed NAT GW is 'VirtualAppliance'
+    next_hop_type          = "VirtualAppliance" 
+    # The next_hop_in_ip_address is NOT needed here because Azure manages the NAT GW IP
+  }
 }
 
 resource "azurerm_subnet_route_table_association" "private_subnet_associations" {
