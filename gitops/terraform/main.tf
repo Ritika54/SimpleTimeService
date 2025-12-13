@@ -17,12 +17,6 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     vnet_subnet_id = azurerm_subnet.private_subnets[0].id 
   }
 
-  network_profile {
-    network_plugin     = "azure"
-    load_balancer_sku  = "standard" 
-    outbound_type      = "loadBalancer"
-  }
-
   identity {
     type = "SystemAssigned"
   }
