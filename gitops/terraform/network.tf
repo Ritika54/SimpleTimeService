@@ -22,6 +22,7 @@ resource "azurerm_subnet" "private_subnets" {
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.${count.index + 3}.0/24"]
   default_outbound_access_enabled = false
+  
   # Delegate the subnet to the AKS service
   delegation {
     name = "delegation"
@@ -54,4 +55,19 @@ resource "azurerm_subnet_nat_gateway_association" "private_subnet_associations" 
   count          = 2
   subnet_id      = azurerm_subnet.private_subnets[count.index].id
   nat_gateway_id = azurerm_nat_gateway.nat_gw.id
+}
+
+resource "azurerm_route_table" "aks_node_rt" {
+  name                = "aks-node-routetable"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  # Note: You do not need to manually add the 0.0.0.0/0 route here. 
+  # Associating the NAT Gateway in the subnet configuration handles the outbound rule implicitly.
+}
+
+resource "azurerm_subnet_route_table_association" "private_subnet_associations" {
+  count          = 2
+  subnet_id      = azurerm_subnet.private_subnets[count.index].id
+  route_table_id = azurerm_route_table.aks_node_rt.id
 }
