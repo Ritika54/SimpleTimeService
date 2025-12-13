@@ -97,19 +97,6 @@ resource "azurerm_network_security_group" "aks_nsg_private" {
     destination_address_prefix = "AzureCloud" # Service Tag
     destination_port_range     = "*"
   }
-  
-  # Allow outbound access to Azure Container Registry (ACR) if needed later
-   security_rule {
-    name                       = "Allow_Outbound_ACR"
-    priority                   = 120
-    direction                  = "Outbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_address_prefix      = "*"
-    source_port_range          = "*"
-    destination_address_prefix = "AzureContainerRegistry" # Service Tag
-    destination_port_range     = "80,443"
-  }
 }
 
 resource "azurerm_subnet_network_security_group_association" "aks_nsg_private_association" {
