@@ -22,15 +22,6 @@ resource "azurerm_subnet" "private_subnets" {
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.${count.index + 3}.0/24"]
   default_outbound_access_enabled = false
-  
-  # Delegate the subnet to the AKS service
-  delegation {
-    name = "delegation"
-    service_delegation {
-      name    = "Microsoft.ContainerService/managedClusters"
-      actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
-    }
-  }
 }
 
 # NAT Gateway for outbound access from private subnets
