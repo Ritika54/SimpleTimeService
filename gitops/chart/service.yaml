@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: simple-time-service
+  namespace: simple-time-service
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-resource-group: "rg-ritika-test"
     service.beta.kubernetes.io/azure-load-balancer-ipv4: "40.85.176.73"
