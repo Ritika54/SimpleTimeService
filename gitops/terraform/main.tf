@@ -14,20 +14,13 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     name           = "systempool"
     node_count     = 2
     vm_size        = "Standard_DS2_v2"
-    vnet_subnet_id = azurerm_subnet.private_subnets[0].id # Place nodes in the private subnet
-    # Ensure outbound type is UserDefinedRouting or ManagedNAT for custom VNet scenarios
-    # Azure CNI networking handles IP assignment within the VNet
+    vnet_subnet_id = azurerm_subnet.private_subnets[0].id 
   }
 
   network_profile {
     network_plugin     = "azure"
-    # The default load balancer SKU for Standard tier is "Standard", which supports public IPs.
     load_balancer_sku  = "standard" 
-    outbound_type      = "userDefinedRouting" # Necessary when managing NAT GW yourself
-
-    # Define the CIDRs required by AKS networking
-    service_cidr       = "10.240.0.0/16"
-    dns_service_ip     = "10.240.0.10"
+    outbound_type      = "loadBalancer"
   }
 
   identity {
