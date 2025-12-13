@@ -104,7 +104,7 @@ resource "azurerm_network_security_group" "aks_nsg_private" {
     priority                   = 120
     direction                  = "Outbound"
     access                     = "Allow"
-    protocol                   = "TCP"
+    protocol                   = "Tcp"
     source_address_prefix      = "*"
     source_port_range          = "*"
     destination_address_prefix = "AzureContainerRegistry" # Service Tag
