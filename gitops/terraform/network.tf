@@ -65,9 +65,7 @@ resource "azurerm_route_table" "aks_node_rt" {
   route {
     name                   = "DefaultRouteToInternet"
     address_prefix         = "0.0.0.0/0"
-    # The next_hop_type for a UDR going via an Azure-managed NAT GW is 'VirtualAppliance'
-    next_hop_type          = "VirtualAppliance" 
-    # The next_hop_in_ip_address is NOT needed here because Azure manages the NAT GW IP
+    next_hop_type          = "Internet"
   }
 }
 
