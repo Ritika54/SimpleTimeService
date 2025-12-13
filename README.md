@@ -36,12 +36,13 @@ Login to your azure account, if you want to deploy the resources
 * `terraform plan`
 * `terraform apply`
 
-## How to deploy the application on AKS cluster?
+## How to deploy the application on AKS cluster from local?
 Yaml file are located at `gitops/chart`
 
 * `az login`
 * `az account set --subscription SUBSCRIPTION_ID`
 * `az aks get-credentials --resource-group RESOURCEGROUPT_NAME --name AKS_CLUSTER_NAME --overwrite-existing`
+* update [image](https://github.com/Ritika54/SimpleTimeService/blob/main/gitops/chart/deployment.yaml#L17) with docker hub image
 * Remove the secret yaml as you will be using the public image of docker hub. For my case I deployed image from my GitHub container registry, so in-order to pull it I added ImagePullSecret.
 * `kubectl apply -f /gitops/chart/namespace.yaml`
 * `kubectl apply -f /gitops/chart`
