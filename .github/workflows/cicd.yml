@@ -54,7 +54,7 @@ jobs:
 
         - name: Apply yamls on cluster
           run: |
-            cd gitops/chart
+            cd gitops/kubernetes_manifests
             kubectl apply -f ./namespace.yaml
             DOCKER_CFG_JSON=$(echo -n '{"auths":{"ghcr.io/ritika54":{"username":"Ritika54","password":"${{ secrets.DOCKER_PASSWORD }}","email":"${{ secrets.DOCKER_EMAIL }}"}}}' | base64 -w 0)
             sed "s|SECRET_PLACEHOLDER|$DOCKER_CFG_JSON|" secret.yaml > secret-tmp.yaml
