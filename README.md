@@ -37,7 +37,8 @@ This repository contains:
 │       ├── secret.yaml
 │       └── service.yaml
 ├── .gitignore
-└── README.md
+├── README.md
+└── TROUBLESHOOTING.md
 ```
 
 
