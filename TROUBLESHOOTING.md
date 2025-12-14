@@ -67,7 +67,7 @@ E1211 19:44:15.274468   26760 portforward.go:234] lost connection to pod
 After correcting the port configuration, port-forwarding worked successfully.
 
 ---
-### 5. Azure Load Balancer Creation Failure (Authorization)
+### 5. Load Balancer Creation Failure (Authorization)
 
 > reason: SyncLoadBalancerFailed \
 message: > \
@@ -90,3 +90,38 @@ ERROR CODE: AuthorizationFailed \
 2. Recreated the Kubernetes Service
 
 Load Balancer was successfully provisioned afterward.
+
+---
+### AKS Cluster Creation Failed – Service CIDR Overlap
+
+> Error: creating Kubernetes Cluster (Subscription: "492ab093-d627-4955-b6ba-0306b9a8b13e" Resource Group Name: "rg-ritika-test" Kubernetes Cluster Name: "aks-ritika-test"): performing CreateOrUpdate: unexpected status 400 (400 Bad Request) with response: { "code": "ServiceCidrOverlapExistingSubnetsCidr", "details": null, "message": "The specified service CIDR 10.0.0.0/16 is conflicted with an existing subnet CIDR 10.0.3.0/24. Please see https://aka.ms/aks/servicecidroverlap for how to fix the error.", "subcode": "", "target": "networkProfile.serviceCIDR" }
+with azurerm_kubernetes_cluster.aks_cluster
+on main.tf line 6, in resource "azurerm_kubernetes_cluster" "aks_cluster":
+resource "azurerm_kubernetes_cluster" "aks_cluster" {
+
+**Root Cause**: The Kubernetes **service CIDR** overlapped with the VNet subnet IP range.
+
+This happened because:
+- The `service_cidr` was **not explicitly defined** in the AKS Terraform configuration
+- Terraform (Azure provider) therefore used the **default service CIDR: `10.0.0.0/16`**
+- The same `10.0.0.0` address space was already being used for VNet subnets
+
+AKS requires the following CIDR ranges to be **non-overlapping**:
+- VNet subnet CIDRs
+- Kubernetes service CIDR
+- Kubernetes pod CIDR 
+
+**Solution**: 
+Updated the VNet subnet IP ranges from:
+`10.0.0.0/16` to `10.1.0.0/16`.
+This removed the overlap with the default AKS service CIDR and allowed the cluster to be created successfully.
+
+AKS cluster creation succeeded after correcting the network ranges.
+
+**BETTER SOLUTION**
+Always explicitly define the following in AKS Terraform configurations:
+- `service_cidr`
+- `dns_service_ip`
+- `pod_cidr`
+
+This avoids unintended overlaps caused by provider defaults.
